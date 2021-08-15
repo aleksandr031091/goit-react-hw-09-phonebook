@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-// import PropTypes from "prop-types";
+import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteContact,
   getContacts,
@@ -8,34 +8,29 @@ import {
 import { getFilteredContact } from "../../../redux/pfonebook/contactsSelectors";
 import ContactsListStyled from "./ContactsListStyled";
 
-class ContactList extends Component {
-  componentDidMount() {
-    this.props.getContacts();
-  }
+const ContactList = () => {
+  const contacts = useSelector(getFilteredContact);
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <ContactsListStyled>
-        {this.props.contacts.map(({ id, name, number }) => (
-          <li className="items" key={id}>
-            <span>{name}</span> : <span>{number}</span>
-            <button
-              className="button"
-              onClick={() => this.props.deleteContact(id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ContactsListStyled>
-    );
-  }
-}
+  useEffect(() => {
+    dispatch(getContacts());
+  });
 
-const mstp = (state) => {
-  return {
-    contacts: getFilteredContact(state),
-  };
+  return (
+    <ContactsListStyled>
+      {contacts.map(({ id, name, number }) => (
+        <li className="items" key={id}>
+          <span>{name}</span> : <span>{number}</span>
+          <button
+            className="button"
+            onClick={() => dispatch(deleteContact(id))}
+          >
+            Delete
+          </button>
+        </li>
+      ))}
+    </ContactsListStyled>
+  );
 };
 
-export default connect(mstp, { deleteContact, getContacts })(ContactList);
+export default ContactList;

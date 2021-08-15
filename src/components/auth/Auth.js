@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   loginUserOperation,
   registerUserOperation,
@@ -9,73 +9,67 @@ import AuthFormStyled from "./AuthFormStyled";
 
 const initialState = { name: "", email: "", password: "" };
 
-class Auth extends Component {
-  state = { ...initialState };
+const Auth = () => {
+  const [state, setState] = useState(initialState);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-  onHandleChange = (e) => {
+  const onHandleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
+    setState((prev) => ({ ...prev, [name]: value }));
   };
 
-  onHandleSubmit = (e) => {
+  const onHandleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
-    this.props.location.pathname === "/signin"
-      ? this.props.loginUserOperation({ email, password })
-      : this.props.registerUserOperation(this.state);
-    this.setState({ ...initialState });
+    const { email, password } = state;
+    location.pathname === "/signin"
+      ? dispatch(loginUserOperation({ email, password }))
+      : dispatch(registerUserOperation(state));
+    setState({ ...initialState });
   };
 
-  render() {
-    const { pathname } = this.props.location;
-    const { name, email, password } = this.state;
-    return (
-      <AuthFormStyled onSubmit={this.onHandleSubmit}>
-        {pathname !== "/signin" && (
-          <label className="label">
-            Name
-            <input
-              className="input"
-              type="text"
-              name="name"
-              value={name}
-              onChange={this.onHandleChange}
-              placeholder="*Rosie Simpson"
-            />
-          </label>
-        )}
+  return (
+    <AuthFormStyled onSubmit={onHandleSubmit}>
+      {location.pathname !== "/signin" && (
         <label className="label">
-          Email
+          Name
           <input
             className="input"
             type="text"
-            name="email"
-            value={email}
-            onChange={this.onHandleChange}
-            placeholder="*rosie@gmail.com"
+            name="name"
+            value={state.name}
+            onChange={onHandleChange}
+            placeholder="*Rosie Simpson"
           />
         </label>
-        <label className="label">
-          Password
-          <input
-            className="input"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.onHandleChange}
-            placeholder="*"
-          />
-        </label>
-        <button className="button" type="submit">
-          {pathname === "/signin" ? "Login" : "Register"}
-        </button>
-      </AuthFormStyled>
-    );
-  }
-}
+      )}
+      <label className="label">
+        Email
+        <input
+          className="input"
+          type="text"
+          name="email"
+          value={state.email}
+          onChange={onHandleChange}
+          placeholder="*rosie@gmail.com"
+        />
+      </label>
+      <label className="label">
+        Password
+        <input
+          className="input"
+          type="password"
+          name="password"
+          value={state.password}
+          onChange={onHandleChange}
+          placeholder="*"
+        />
+      </label>
+      <button className="button" type="submit">
+        {location.pathname === "/signin" ? "Login" : "Register"}
+      </button>
+    </AuthFormStyled>
+  );
+};
 
-export default connect(null, { registerUserOperation, loginUserOperation })(
-  withRouter(Auth)
-);
+export default Auth;
