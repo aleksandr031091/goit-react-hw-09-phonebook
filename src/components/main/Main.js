@@ -1,12 +1,13 @@
 import React, { Suspense } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Switch } from "react-router-dom";
 import { mainRoutes } from "../../routes/mainRoutes";
 import PrivateRoute from "../../routes/privateRoutes";
 import PublicRoute from "../../routes/publicRoutes";
 import MainStyled from "./MainStyled";
 
-const Main = ({ isAuth }) => {
+const Main = () => {
+  const isAuth = useSelector((state) => state.auth.idToken);
   return (
     <MainStyled>
       <Suspense fallback={<p>...loading</p>}>
@@ -37,9 +38,4 @@ const Main = ({ isAuth }) => {
   );
 };
 
-const mstp = (store) => {
-  return {
-    isAuth: store.auth.idToken,
-  };
-};
-export default connect(mstp)(Main);
+export default Main;

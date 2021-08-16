@@ -1,10 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { mainRoutes } from "../../routes/mainRoutes";
 import NavigationItem from "./NavigationItems";
 import NavigationStyled from "./NavigationStyled";
 
-const Navigstion = ({ isAuth }) => {
+const Navigstion = () => {
+  const isAuth = useSelector((state) => state.auth.idToken);
   return (
     <NavigationStyled>
       {mainRoutes.map((route) => (
@@ -14,10 +15,4 @@ const Navigstion = ({ isAuth }) => {
   );
 };
 
-const mstp = (state) => {
-  return {
-    isAuth: state.auth.idToken,
-  };
-};
-
-export default connect(mstp)(Navigstion);
+export default Navigstion;
