@@ -5,7 +5,8 @@ const ContactsListStyled = styled.ul`
   flex-direction: column;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding: 10px 0 50px 0;
+
   .items {
     color: #c12127;
   }
