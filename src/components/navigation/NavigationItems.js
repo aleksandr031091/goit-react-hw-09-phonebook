@@ -11,9 +11,10 @@ const NavigationItems = ({
   isAuth,
 }) => {
   return (
-    <NavigationItemsStyled>
+    // <NavigationItemsStyled>
+    <>
       {!isPrivat && !restricted && (
-        <li>
+        <li className="navListItems">
           <NavLink
             to={path}
             exact={exact}
@@ -25,7 +26,7 @@ const NavigationItems = ({
         </li>
       )}
       {isPrivat && !restricted && isAuth && (
-        <li>
+        <li className="navListItems">
           <NavLink
             to={path}
             exact={exact}
@@ -37,7 +38,7 @@ const NavigationItems = ({
         </li>
       )}
       {!isPrivat && restricted && !isAuth && (
-        <li>
+        <li className="navListItems">
           <NavLink
             to={path}
             exact={exact}
@@ -48,7 +49,8 @@ const NavigationItems = ({
           </NavLink>
         </li>
       )}
-    </NavigationItemsStyled>
+    </>
+    // </NavigationItemsStyled>
   );
 };
 
