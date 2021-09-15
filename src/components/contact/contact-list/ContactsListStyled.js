@@ -27,7 +27,6 @@ const ContactsListStyled = styled.ul`
   }
   .button:focus {
     color: #c12127;
-    background-color: #ffc8ca;
     border-color: #c12127;
     box-shadow: 0px 1px 13px 0px #c12127;
 
