@@ -37,7 +37,7 @@ const NavigationItems = ({
           </NavLink>
         </li>
       )}
-      {!isPrivat && restricted && !isAuth && (
+      {!isPrivat && !isAuth && restricted && (
         <li className="navListItems">
           <NavLink
             to={path}

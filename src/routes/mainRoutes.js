@@ -8,7 +8,7 @@ export const mainRoutes = [
       () => import("../pages/HomePage") /* webpackChunkName: "HomePage" */
     ),
     exact: true,
-    isPrivat: false,
+    isPrivat: true,
     restricted: false,
   },
   {
@@ -18,7 +18,7 @@ export const mainRoutes = [
       () => import("../pages/AbautPage") /* webpackChunkName: "AbautPage" */
     ),
     exact: true,
-    isPrivate: false,
+    isPrivat: true,
     restricted: false,
   },
   {
