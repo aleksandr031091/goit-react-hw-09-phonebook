@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {
   loginUserOperation,
@@ -11,6 +11,8 @@ const initialState = { name: "", email: "", password: "" };
 
 const Auth = () => {
   const [state, setState] = useState(initialState);
+  const error = useSelector((state) => state.auth.error);
+
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -22,6 +24,7 @@ const Auth = () => {
   const onHandleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = state;
+
     location.pathname === "/signin"
       ? dispatch(loginUserOperation({ email, password }))
       : dispatch(registerUserOperation(state));
@@ -65,6 +68,7 @@ const Auth = () => {
           placeholder="*"
         />
       </label>
+      {error && <p>Password must be more than 6 characters</p>}
       <button className="button" type="submit">
         {location.pathname === "/signin" ? "Login" : "Register"}
       </button>
