@@ -65,10 +65,10 @@ const Auth = () => {
           name="password"
           value={state.password}
           onChange={onHandleChange}
-          placeholder="*"
+          placeholder="*min 7 characters"
         />
       </label>
-      {error && <p>Password must be more than 6 characters</p>}
+      {error && <p>Wrong password or email</p>}
       <button className="button" type="submit">
         {location.pathname === "/signin" ? "Login" : "Register"}
       </button>
